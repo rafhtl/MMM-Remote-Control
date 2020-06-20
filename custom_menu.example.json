@@ -2,7 +2,7 @@
    "id": "custom",
    "type": "menu",
    "icon": "id-card-o",
-   "text": "%%TRANSLATE:CUSTOM_MENU%%",
+   "text": "rdrMirror",
    "items": [{
          "id": "custom-item-1",
          "type": "item",

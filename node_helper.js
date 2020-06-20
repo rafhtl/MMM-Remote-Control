@@ -1,4 +1,4 @@
-/* Magic Mirror
+3/* Magic Mirror
  * Module: Remote Control
  *
  * By Joseph Bethge
@@ -16,6 +16,9 @@ const os = require("os");
 const simpleGit = require("simple-git");
 const bodyParser = require("body-parser");
 const express = require("express");
+const request = require('request');
+const https = require('https');
+var wget = require('wget');
 
 var defaultModules = require(path.resolve(__dirname + "/../default/defaultmodules.js"));
 
@@ -34,7 +37,8 @@ module.exports = NodeHelper.create(Object.assign({
         // Subclass start method.
         start: function() {
             var self = this;
-
+            this.useHttps = false;
+            this.port = '';
             this.initialized = false;
             console.log("Starting node helper for: " + self.name);
 
@@ -150,6 +154,7 @@ module.exports = NodeHelper.create(Object.assign({
 
                 if (query.action) {
                     var result = self.executeQuery(query, res);
+                    
                     if (result === true) {
                         return;
                     }
@@ -650,8 +655,10 @@ module.exports = NodeHelper.create(Object.assign({
                 exec("sudo shutdown -r now", opts, (error, stdout, stderr) => { self.checkForExecError(error, stdout, stderr, res); });
                 return true;
             }
-            if (query.action === "RESTART" || query.action === "STOP") {
-                this.controlPm2(res, query);
+            if (query.action === "RESTART" ) {
+                //this.controlPm2(res, query);
+                exec("pm2 restart MagicMirror", opts, (error, stdout, stderr) => { self.checkForExecError(error, stdout, stderr, res); });
+                
                 return true;
             }
             if (query.action === "USER_PRESENCE") {
@@ -670,10 +677,124 @@ module.exports = NodeHelper.create(Object.assign({
                 return true;
             }
             if (query.action === "BRIGHTNESS") {
+                //console.log("BRIGHTNESS: "+ query.value);
                 self.sendResponse(res);
                 self.sendSocketNotification(query.action, query.value);
                 return true;
             }
+            if (query.action === "VOLUME_SET") {
+                //console.log("VOLUME_SET: "+ query.value);
+                
+                self.sendResponse(res);
+                self.sendSocketNotification(query.action, query.value);
+                
+                
+                return true;
+            }
+            if (query.action === "PAGE_DECREMENT") {
+               
+                
+                self.sendResponse(res);
+                self.sendSocketNotification(query.action, query.value);
+                
+                
+                return true;
+            }
+            if (query.action === "PAGE_INCREMENT") {
+               
+                
+                self.sendResponse(res);
+                self.sendSocketNotification(query.action, query.value);
+                
+                
+                return true;
+            }
+            if (query.action === "CHANNEL_DN") {
+               
+                
+                self.sendResponse(res);
+                self.sendSocketNotification(query.action, query.value);
+                
+                
+                return true;
+            }
+            if (query.action === "CHANNEL_UP") {
+               
+                
+                self.sendResponse(res);
+                self.sendSocketNotification(query.action, query.value);
+                
+                
+                return true;
+            }
+            
+            if (query.action === "PLAY") {
+               
+                
+                self.sendResponse(res);
+                self.sendSocketNotification(query.action, query.value);
+                
+                
+                return true;
+            }
+            if (query.action === "STOP") {
+               
+                
+                self.sendResponse(res);
+                self.sendSocketNotification(query.action, query.value);
+                
+                
+                return true;
+            }
+            
+            if (query.action === "MEMO_PROCESS") {
+                self.sendResponse(res);
+
+                var type = query.memo_type ? query.memo_type : "AddMemo";
+                var title = query.memo_title ? query.memo_title : "TODO";
+                var message = query.memo_message ? query.memo_message : "Attention!";
+                var position = query.memo_position ? query.memo_position : 1;
+
+                
+                console.log("ADD: "+ "type:"+type+" title:"+title+" message:"+message+" position:"+position);
+
+                
+                
+                var memo_ipaddress = self.getIpAddresses();
+                
+                var httpvar = (this.useHttps) ? "https" : "http";
+                
+                theaddress = httpvar + "://"+memo_ipaddress+":"+String(self.port);
+                if(type==="AddMemo"){
+                    var path = "/"+type+"?memoTitle="+title+"&item="+message;
+                    var memo_command = theaddress+path ;
+                }else{
+                    var path = "/"+type+"?memoTitle="+title+"&item="+position;
+                    var memo_command = theaddress+path ;
+                }  
+                if (this.useHttps){
+                    
+                    //console.log("HTTPS: "+httpvar + "://"+memo_ipaddress[0]+" "+String(self.port)+" "+encodeURI(path)+" "+"GET");
+                    //wget --no-check-certificate 'https://192.168.0.132:8080/AddMemo?memoTitle=SHOPPING&item=Test'
+                    this.sendRequestHttps(httpvar,memo_ipaddress[0],String(self.port),path,"GET"," --no-check-certificate '"+memo_command+"'");
+                 
+                    
+                }else {
+                    this.sendRequest(memo_command);
+                }
+                
+                
+                
+                
+                
+
+                //self.sendSocketNotification(query.action, {"memoTitle": "TODO", "level": "", "item": "NEWONE", "timestamp": new Date()});
+                
+                
+                return true;
+            }
+            
+            
             if (query.action === "SAVE") {
                 self.sendResponse(res);
                 self.callAfterUpdate(function() { self.saveDefaultSettings(); });
@@ -715,6 +836,7 @@ module.exports = NodeHelper.create(Object.assign({
                 });
                 return true;
             }
+            
             if (query.action === "UPDATE") {
                 self.updateModule(decodeURI(query.module), res);
                 return true;
@@ -908,6 +1030,7 @@ module.exports = NodeHelper.create(Object.assign({
             });
 
             fs.writeFile(path.resolve(__dirname + "/settings.json"), text, function(err) {
+                console.log("saveDefaultSettings: "+__dirname + "/settings.json");
                 if (err) {
                     throw err;
                 }
@@ -982,6 +1105,84 @@ module.exports = NodeHelper.create(Object.assign({
             }
             return addresses;
         },
+        sendRequestHttps: function(pprotocol,phost,pport,ppath,pmethod,memo_command) {
+            var cmd = 'wget --quiet -O /dev/null '+memo_command+ " >/dev/null 2>&1";
+            var child = exec(
+              cmd,
+              function (error, stdout, stderr) {
+                //console.log('stdout: ' + stdout);
+                //console.log('stderr: ' + stderr);
+                if (error !== null) {
+                  console.log('exec error: ' + error);
+                }
+              }
+            );
+        },
+        /* sendRequestHttps: function(pprotocol,phost,pport,ppath,pmethod) {
+            
+            var options = {
+                protocol: pprotocol,
+                host: phost,
+                path: encodeURI(ppath),
+                port: pport,
+                proxy: 'http://host:port',
+                method: pmethod
+            };
+            process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
+            var req = wget.request(options, function(res) {
+                var content = '';
+                if (res.statusCode === 200) {
+                    res.on('error', function(err) {
+                        console.log(err);
+                    });
+                    res.on('data', function(chunk) {
+                        content += chunk;
+                    });
+                    res.on('end', function() {
+                        console.log(content);
+                    });
+                } else {
+                    console.log('Server respond ' + res.statusCode);
+                }
+            });
+
+            req.end();
+            req.on('error', function(err) {
+                console.log(err);
+            });
+        }, */
+        
+        /* sendRequestHttps: function(phost,pport,ppath,pmethod) {
+            //process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
+            
+            https.request({ 
+              hostname: phost, 
+              port: pport,
+              path: ppath,
+              method: pmethod,
+              //ca: [ fs.readFileSync('/etc/ssl/certs/ca-certificates.crt') ],
+              rejectUnauthorized: false,
+              //requestCert: true,
+              //agent: false,
+
+            });
+        }, */
+        
+        sendRequest: function(url) {
+            var self = this;
+            request({ 
+                url: url,
+                method: "GET"
+            }, function(error, response, body) {
+                if (!error && response.statusCode == 200) {
+                   //console.error("DONE: " + url); 
+                }
+                else {
+                    console.error("Could not perform request: " + url);
+
+                }
+            });
+        },
 
         socketNotificationReceived: function(notification, payload) {
             var self = this;
@@ -991,6 +1192,10 @@ module.exports = NodeHelper.create(Object.assign({
                 this.thisConfig = payload.remoteConfig;
                 if (!this.initialized) {
                     // Do anything else required to initialize
+
+                    this.useHttps = this.thisConfig.useHttps;
+                    this.port = this.thisConfig.port;
+                    
                     this.initialized = true;
                 } else {
                     this.waiting.forEach(o => { o.run(); });
@@ -1016,6 +1221,7 @@ module.exports = NodeHelper.create(Object.assign({
             }
             if (notification === "REMOTE_CLIENT_CONNECTED") {
                 this.sendSocketNotification("REMOTE_CLIENT_CONNECTED");
+                
                 this.loadCustomMenus();
                 if ("id" in this.moduleApiMenu) {
                     this.sendSocketNotification("REMOTE_CLIENT_MODULEAPI_MENU", this.moduleApiMenu);

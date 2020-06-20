@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>RDR MIRROR</title>
+    <title>%%TRANSLATE:TITLE%%</title>
     <meta name="google" content="notranslate" />
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
@@ -11,7 +11,7 @@
     <link rel="stylesheet" type="text/css" href="vendor/css/font-awesome.css">
     <link rel="stylesheet" type="text/css" href="modules/MMM-Remote-Control/remote.css">
     <link rel="apple-touch-icon" href="modules/MMM-Remote-Control/apple-touch-icon.png">
-    <meta name="apple-mobile-web-app-title" content="rdrMirrorRemote">
+    <meta name="apple-mobile-web-app-title" content="MagicRemote">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -21,11 +21,11 @@
 <body>
     <div class="container normal fill">
         <div id="module_1_MMM-Remote-Control" class="fill">
-            <header class="header">RDR MIRROR</header>
+            <header class="header">%%TRANSLATE:TITLE%%</header>
             <div class="fill">
                 <div class="menu above-fold">
                     <!-- general back button -->
-                    <div id="back-button" class="menu-element hidden button power-menu edit-menu settings-menu add-module-menu update-menu alert-menu memo-menu">
+                    <div id="back-button" class="menu-element hidden button power-menu edit-menu settings-menu add-module-menu update-menu alert-menu">
                         <span class="fa fa-fw fa-angle-left" aria-hidden="true"></span>
                         <!-- <span class="text">%%TRANSLATE:BACK%%</span> -->
                     </div>
@@ -37,11 +37,6 @@
                     <div id="hide-alert-button" class="menu-element hidden button alert-menu">
                         <span class="fa fa-fw fa-eye-slash" aria-hidden="true"></span>
                         <span class="text">%%TRANSLATE:HIDEALERT%%</span>
-                    </div>
-                    <!-- memo menu -->
-                    <div id="memo-send-button" class="menu-element hidden button memo-menu">
-                        <span class="fa fa-fw fa-send-o" aria-hidden="true"></span>
-                        <span class="text">MEMO</span>
                     </div>
                     <!-- edit menu -->
                     <div id="save-button" class="menu-element hidden button edit-menu">
@@ -68,52 +63,6 @@
                         <span class="fa fa-fw fa-undo" aria-hidden="true"></span>
                         </span>
                     </div>
-                    <!-- volume -->
-                    <div class="menu-element hidden edit-menu one-line">
-                        <span class="stack fa-fw">
-                        <span class="fa fa-fw fa-volume-down outer-label fa-stack-1x" aria-hidden="true"></span>
-                        
-                        
-                        </span>
-                        <div id="volume-container" class="slider-container menu-element hidden button edit-menu">
-                            <input id="volume-slider" type="range" min="0" max="100" step="2" value="30" class="slider" />
-                        </div>
-                        <span class="fa fa-fw fa-volume-up" aria-hidden="true"></span>
-                        <span id="volume-reset" class="inline-menu-element hidden button edit-menu">
-                        <span class="fa fa-fw fa-volume-mute" aria-hidden="true"></span>
-                        </span>
-                    </div>
-                    
-                    <!-- pages channel-->
-                    <div id="page_decrement" class="menu-element hidden button edit-menu">
-                        <span class="fa fa-fw fa-arrow-left" aria-hidden="true"></span>
-                        
-                    </div>
-                    <div id="channel_dn" class="menu-element hidden button edit-menu">
-                        <span class="fa fa-fw fa-chevron-down" aria-hidden="true"></span>
-                        
-                    </div>
-                    <div id="stop" class="menu-element hidden button edit-menu">
-                        <span class="fa fa-fw fa-stop" aria-hidden="true"></span>
-                        
-                    </div>
-                    <div id="play" class="menu-element hidden button edit-menu">
-                        <span class="fa fa-fw fa-play" aria-hidden="true"></span>
-                        
-                    </div>
-                    
-                    
-                    
-                    <div id="channel_up" class="menu-element hidden button edit-menu">
-                        <span class="fa fa-fw fa-chevron-up" aria-hidden="true"></span>
-                        
-                    </div>
-                    <div id="page_increment" class="menu-element hidden button edit-menu">
-                        <span class="fa fa-fw fa-arrow-right" aria-hidden="true"></span>
-                        
-                    </div>
-                    
-                    
                     <!-- module menu -->
                     <div id="add-module" class="menu-element hidden button settings-menu">
                         <span class="fa fa-fw fa-plus" aria-hidden="true"></span>
@@ -130,7 +79,7 @@
                         <span id="delete-search-input" class="fa fa-times-circle delete-button" style="display:none;"></span>
                     </div>
                     <!-- update menu -->
-                    <div id="update-mm-button" class="menu-element hidden button update-menu" >
+                    <div id="update-mm-button" class="menu-element hidden button update-menu">
                         <span class="fa fa-fw fa-toggle-up" aria-hidden="true"></span>
                         <span class="text">%%TRANSLATE:UPDATEMM%%</span>
                     </div>
@@ -139,7 +88,7 @@
                         <span class="text">%%TRANSLATE:UPDATE_AVAILABLE%%</span>
                     </div>
                 </div>
-                <div id="below-fold" class="below-fold menu-element hidden edit-menu settings-menu add-module-menu update-menu alert-menu main-menu power-menu memo-menu">
+                <div id="below-fold" class="below-fold menu-element hidden edit-menu settings-menu add-module-menu update-menu alert-menu main-menu power-menu">
                     <div class="menu-container">
                         <!-- main menu -->
                         <div id="power-button" class="menu-element hidden button main-menu">
@@ -155,12 +104,12 @@
                             <span class="text">%%TRANSLATE:EDIT_MENU_NAME%%</span>
                             <span class="fa fa-fw fa-angle-right" aria-hidden="true"></span>
                         </div>
-                        <div id="settings-button" class="menu-element hidden button main-menu" style="display: none;> 
+                        <div id="settings-button" class="menu-element hidden button main-menu">
                             <span class="fa fa-fw fa-wrench" aria-hidden="true"></span>
                             <span class="text">%%TRANSLATE:CONFIGURE_MENU_NAME%%</span>
                             <span class="fa fa-fw fa-angle-right" aria-hidden="true"></span>
                         </div>
-                        <div id="update-button" class="menu-element hidden button main-menu" style="display: none;>
+                        <div id="update-button" class="menu-element hidden button main-menu">
                             <span class="fa fa-fw fa-toggle-up" aria-hidden="true"></span>
                             <span class="text">%%TRANSLATE:UPDATE_MENU_NAME%%</span>
                             <span class="fa fa-fw fa-angle-right" aria-hidden="true"></span>
@@ -170,17 +119,12 @@
                             <span class="text">%%TRANSLATE:ALERT_MENU_NAME%%</span>
                             <span class="fa fa-fw fa-angle-right" aria-hidden="true"></span>
                         </div>
-                        <div id="memo-button" class="menu-element hidden button main-menu">
-                            <span class="fa fa-fw fa-paste" aria-hidden="true"></span>
-                            <span class="text">MEMO</span>
-                            <span class="fa fa-fw fa-angle-right" aria-hidden="true"></span>
-                        </div>
                         <div id="mirror-link-button" class="menu-element hidden button main-menu">
                             <span class="fa fa-fw fa-external-link " aria-hidden="true"></span>
-                            <span class="text">View rdrMirror</span>
+                            <span class="text">%%TRANSLATE:VIEW_MIRROR%%</span>
                         </div>
                         <!-- power menu -->
-                        <div id="shut-down-button" class="menu-element hidden button power-menu" style="display: none;">
+                        <div id="shut-down-button" class="menu-element hidden button power-menu">
                             <span class="fa fa-fw fa-power-off" aria-hidden="true"></span>
                             <span class="text">%%TRANSLATE:SHUTDOWN%%</span>
                         </div>
@@ -190,7 +134,7 @@
                         </div>
                         <div id="restart-mm-button" class="menu-element hidden button power-menu">
                             <span class="fa fa-fw fa-recycle" aria-hidden="true"></span>
-                            <span class="text">Restart rdrMirror</span>
+                            <span class="text">%%TRANSLATE:RESTARTMM%%</span>
                         </div>
                         <div id="refresh-mm-button" class="menu-element hidden button power-menu">
                             <span class="fa fa-fw fa-globe" aria-hidden="true"></span>
@@ -210,21 +154,20 @@
                             </span>
                             <span class="text">%%TRANSLATE:MONITOROFF%%</span>
                         </div>
-                        <div id="fullscreen-button" class="menu-element hidden button power-menu" style="display: none;">
+                        <div id="fullscreen-button" class="menu-element hidden button power-menu">
                             <span class="fa fa-fw fa-arrows-alt" aria-hidden="true"></span>
                             <span class="text">%%TRANSLATE:FULLSCREEN%%</span>
                         </div>
-                        <div id="minimize-button" class="menu-element hidden button power-menu" style="display: none;">
+                        <div id="minimize-button" class="menu-element hidden button power-menu">
                             <span class="fa fa-fw fa-window-minimize" aria-hidden="true"></span>
                             <span class="text">%%TRANSLATE:MINIMIZE%%</span>
                         </div>
-                        <div id="devtools-button" class="menu-element hidden button power-menu" style="display: none;">
+                        <div id="devtools-button" class="menu-element hidden button power-menu">
                             <span class="fa fa-fw fa-terminal" aria-hidden="true"></span>
                             <span class="text">%%TRANSLATE:DEVTOOLS%%</span>
                         </div>
                     </div>
                     <!-- below fold part of alert menu -->
-
                     <form id="alert" action="" method="GET" class="menu-element hidden alert-menu">
                         <input type="hidden" name="action" value="SHOW_ALERT">
                         <div class="xsmall">%%TRANSLATE:FORM_TYPE%%</div>
@@ -241,29 +184,6 @@
                         <div class="xsmall">%%TRANSLATE:FORM_SECONDS%%</div>
                         <input type="number" name="timer" value="4">
                     </form>
-                    
-                    <!-- below fold part of MEMO menu -->
-                    <!-- memo menu -->
-
-                    
-                    <form id="memo" action="" method="GET" class="menu-element hidden memo-menu">
-                        <input type="hidden" name="action" value="MEMO_PROCESS">
-                        <div class="xsmall">TYPE</div>
-                        <select name="memo_type">
-                            <option value="AddMemo">Insert</option>
-                            <option value="RemoveMemo">Delete</option>
-                        </select>
-                        <div class="xsmall">Title</div>
-                        <input type="text" class="medium" placeholder="Title" name="memo_title">
-                        <div class="xsmall">Message</div>
-                        <div>
-                            <textarea class="medium" placeholder="Message" name="memo_message"></textarea>
-                        </div>
-                        <div class="xsmall">Position</div>
-                        <input type="number" name="memo_position" value="1">
-                    </form>
-                    
-                    
                     <!-- below fold part of edit menu -->
                     <div id="visible-modules-container" class="result-list menu-element hidden edit-menu">
                         <div id="visible-modules-loading">
@@ -274,7 +194,7 @@
                             <span class="fa fa-fw fa-exclamation-circle"></span>
                             <span class="text">%%TRANSLATE:NO_MODULES_LOADED%%</span>
                         </div>
-                        <div id="visible-modules-results" class="results small" style="display: none;>
+                        <div id="visible-modules-results" class="results small">
                             <!-- elements are inserted here -->
                         </div>
                     </div>
@@ -348,8 +268,7 @@
                 <span class="text">%%TRANSLATE:DONE%%</span>
             </div>
         </div>
-        <script type="text/javascript" src="config/config.js"></script>
-        <script type="text/javascript" src="socket.io/socket.io.js"></script>
+        <script type="text/javascript" src="/socket.io/socket.io.js"></script>
         <script type="text/javascript" src="js/socketclient.js"></script>
         <script type="text/javascript" src="modules/MMM-Remote-Control/scripts/jquery-3.3.1.slim.min.js"></script>
         <script type="text/javascript" src="modules/MMM-Remote-Control/remote.js"></script>

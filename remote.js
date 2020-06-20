@@ -226,7 +226,16 @@ var Remote = {
         slider.addEventListener("change", function(event) {
             self.sendSocketNotification("REMOTE_ACTION", { action: "BRIGHTNESS", value: slider.value });
         }, false);
+        //volume
+        var slider_volume = document.getElementById("volume-slider");
+        slider_volume.addEventListener("change", function(event) {
+            
+            
+            self.sendSocketNotification("REMOTE_ACTION", { action: "VOLUME_SET", value: slider_volume.value});
+        }, false);
 
+
+        
         var input = document.getElementById("add-module-search");
         var deleteButton = document.getElementById("delete-search-input");
 
@@ -1468,12 +1477,20 @@ var buttons = {
     "alert-button": function() {
         window.location.hash = "alert-menu";
     },
-
+    "memo-button": function() {
+        window.location.hash = "memo-menu";
+    },
     // settings menu buttons
     "brightness-reset": function() {
         var element = document.getElementById("brightness-slider");
         element.value = 100;
         Remote.sendSocketNotification("REMOTE_ACTION", { action: "BRIGHTNESS", value: 100 });
+    },
+    // settings menu buttons
+    "volume-reset": function() {
+        var element = document.getElementById("volume-slider");
+        element.value = 0;
+        Remote.sendSocketNotification("REMOTE_ACTION", { action: "VOLUME_SET", value: 0 });
     },
 
     // edit menu buttons
@@ -1496,7 +1513,31 @@ var buttons = {
             Remote.hideModule(buttons[i].id);
         }
     },
-
+    
+    //pages
+    "page_decrement": function() {
+        Remote.sendSocketNotification("REMOTE_ACTION", { action: "PAGE_DECREMENT" });
+    },
+    "page_increment": function() {
+        Remote.sendSocketNotification("REMOTE_ACTION", { action: "PAGE_INCREMENT" });
+    },
+    //channel
+    
+    "channel_dn": function() {
+        Remote.sendSocketNotification("REMOTE_ACTION", { action: "CHANNEL_DN" });
+    },
+    "channel_up": function() {
+        Remote.sendSocketNotification("REMOTE_ACTION", { action: "CHANNEL_UP" });
+    },
+    //play stop
+    
+    "play": function() {
+        Remote.sendSocketNotification("REMOTE_ACTION", { action: "PLAY" });
+    },
+    "stop": function() {
+        Remote.sendSocketNotification("REMOTE_ACTION", { action: "STOP" });
+    },
+    
     // power menu buttons
     "shut-down-button": function() {
         var self = Remote;
@@ -1600,7 +1641,18 @@ var buttons = {
     },
     "hide-alert-button": function() {
         Remote.sendSocketNotification("REMOTE_ACTION", { action: "HIDE_ALERT" });
-    }
+    },
+        // memo menu
+    "memo-send-button": function() {
+        var kvpairs = {};
+        var form = document.getElementById("memo");
+        for (var i = 0; i < form.elements.length; i++) {
+            var e = form.elements[i];
+            kvpairs[e.name] = e.value;
+        }
+        Remote.sendSocketNotification("REMOTE_ACTION", kvpairs);
+        
+    },
 };
 
 // Initialize socket connection

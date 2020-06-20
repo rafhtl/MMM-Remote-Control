@@ -11,10 +11,12 @@
 
 Module.register("MMM-Remote-Control", {
 
-    requiresVersion: "2.4.0",
+    requiresVersion: "2.7.0",
 
     // Default module config.
     defaults: {
+        useHttps: false,
+        port: '',
         customCommand: {}
     },
 
@@ -101,8 +103,44 @@ Module.register("MMM-Remote-Control", {
             this.setBrightness(payload.brightness);
         }
         if (notification === "BRIGHTNESS") {
+            //this.sendNotification("SHOW_ALERT", {title: "KNOB", message: parseInt(payload), timer: 1000});
             this.setBrightness(parseInt(payload));
         }
+        if (notification === "VOLUME_SET") {
+            
+            this.sendNotification(notification, payload);
+        }
+        if (notification === "PAGE_DECREMENT") {
+            
+            this.sendNotification(notification, payload);
+        }
+        if (notification === "PAGE_INCREMENT") {
+            
+            this.sendNotification(notification, payload);
+        }
+        if (notification === "CHANNEL_DN") {
+            
+            this.sendNotification(notification, payload);
+        }
+        if (notification === "CHANNEL_UP") {
+            
+            this.sendNotification(notification, payload);
+        }
+        
+        if (notification === "PLAY") {
+            
+            this.sendNotification(notification, payload);
+        }
+        if (notification === "STOP") {
+            
+            this.sendNotification(notification, payload);
+        }
+        if (notification === "MEMO_PROCESS") {
+            
+            this.sendNotification(notification, payload);
+        }
+        
+        
         if (notification === "REFRESH") {
             document.location.reload();
         }
@@ -231,7 +269,9 @@ Module.register("MMM-Remote-Control", {
         if (this.addresses.length === 0) {
             this.addresses = ["ip-of-your-mirror"];
         }
-        wrapper.innerHTML = "http://" + this.addresses[0] + ":8080/remote.html";
+        var theaddress = (this.config.useHttps) ? "https" : "http" 
+        theaddress = theaddress + "://"+this.addresses[0].replace(/^\s+|\s+$/g,"")+":"+String(this.config.port);
+        wrapper.innerHTML = theaddress+"/remote.html";
         wrapper.className = "normal xsmall";
         return wrapper;
     },

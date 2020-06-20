@@ -83,6 +83,6 @@
 
 
     "RESPONSE_ERROR": "Well that didn't work. Check the MM logs for more details",
-    "MODULE_CONTROLS": "Module Controls",
+    "MODULE_CONTROLS": "Modules",
     "CUSTOM_MENU": "My Custom Menu"
 }
